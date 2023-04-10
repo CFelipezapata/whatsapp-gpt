@@ -23,7 +23,7 @@ def forward_to_chatgpt(prompt: str) -> str:
     return response
 
 @app.route("/message", methods=['POST'])
-def wa_sms_reply():
+def whatsapp_reply():
         
     msg = request.form.get('Body').lower()
  
