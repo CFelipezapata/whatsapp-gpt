@@ -23,7 +23,6 @@ def forward_to_chatgpt(message: str) -> str:
         temperature=0.6,
     )
     response = completion.choices[0].message.content
-    print(response)
     return response
 
 
