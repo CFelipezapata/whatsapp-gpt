@@ -37,6 +37,7 @@ def whatsapp_reply():
 
     gpt_resp = forward_to_chatgpt(msg)
     reply.body(gpt_resp)
+    print("Resp-->", gpt_resp)
 
     return str(resp)
 
