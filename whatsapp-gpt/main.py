@@ -32,12 +32,12 @@ def whatsapp_reply():
     msg = request.form.get('Body').lower()
 
     print("msg-->", msg)
+    gpt_resp = forward_to_chatgpt(msg)
+    print("Resp-->", gpt_resp)
+    
     resp = MessagingResponse()
     reply = resp.message()
-
-    gpt_resp = forward_to_chatgpt(msg)
     reply.body(gpt_resp)
-    print("Resp-->", gpt_resp)
 
     return str(resp)
 
