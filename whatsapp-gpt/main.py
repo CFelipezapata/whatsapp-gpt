@@ -36,8 +36,7 @@ def whatsapp_reply():
     print("Resp-->", gpt_resp)
     
     resp = MessagingResponse()
-    reply = resp.message()
-    reply.body(gpt_resp)
+    resp.message(gpt_resp)
 
     return str(resp)
 
