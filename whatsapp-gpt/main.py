@@ -16,7 +16,7 @@ openai.api_key = os.getenv('OPENAI_KEY')
 app = Flask(__name__)
 
 
-def handle_message(message_text: str, recipient_id: str):
+def reply_to_whatsapp(message_text: str, recipient_id: str):
 
     print("Received Message -->", message_text)
     gpt_resp = forward_to_chatgpt(message_text)
@@ -32,10 +32,8 @@ def handle_message(message_text: str, recipient_id: str):
         'to': recipient_id,
         'text': json.dumps({'body': gpt_resp, 'preview_url': False})
     }
-    
-    print(req_body)
 
-    print(requests.post(WEBHOOK_URL, headers=headers, data=req_body).json())
+    requests.post(WEBHOOK_URL, headers=headers, data=req_body)
 
 
 def forward_to_chatgpt(message: str) -> str:
@@ -54,14 +52,14 @@ def forward_to_chatgpt(message: str) -> str:
 
 
 @app.route("/message", methods=['GET', 'POST'])
-def whatsapp_reply():
-    
+def handle_message():
+
     data = json.loads(request.data)
 
     if 'messages' in data['entry'][0]['changes'][0]['value']:
         message_text = data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
         sender_id = data['entry'][0]['changes'][0]['value']['contacts'][0]['wa_id']
-        handle_message(message_text, sender_id)
+        reply_to_whatsapp(message_text, sender_id)
 
     return ('', 204)
 
