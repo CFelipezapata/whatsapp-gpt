@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ```
 ### Run the flask app
 ```shell
-python -m flask --app ./whatsapp-gpt/main.py run
+python -m flask --app ./whatsapp-gpt/main.py --debug run
 ```
 
 ### Expose your localhost
