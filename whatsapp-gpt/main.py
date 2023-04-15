@@ -15,6 +15,18 @@ openai.api_key = os.getenv('OPENAI_KEY')
 
 app = Flask(__name__)
 
+@app.route("/message", methods=['GET', 'POST'])
+def handle_message():
+
+    data = json.loads(request.data)
+
+    if 'messages' in data['entry'][0]['changes'][0]['value']:
+        message_text = data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+        sender_id = data['entry'][0]['changes'][0]['value']['contacts'][0]['wa_id']
+        reply_to_whatsapp(message_text, sender_id)
+
+    return ('', 204)
+
 
 def reply_to_whatsapp(message_text: str, recipient_id: str):
 
@@ -49,19 +61,6 @@ def forward_to_chatgpt(message: str) -> str:
     )
     response = completion.choices[0].message.content
     return response
-
-
-@app.route("/message", methods=['GET', 'POST'])
-def handle_message():
-
-    data = json.loads(request.data)
-
-    if 'messages' in data['entry'][0]['changes'][0]['value']:
-        message_text = data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
-        sender_id = data['entry'][0]['changes'][0]['value']['contacts'][0]['wa_id']
-        reply_to_whatsapp(message_text, sender_id)
-
-    return ('', 204)
 
 
 if __name__ == "__main__":
