@@ -23,6 +23,7 @@ def handle_message():
     if 'messages' in data['entry'][0]['changes'][0]['value']:
         message_text = data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
         sender_id = data['entry'][0]['changes'][0]['value']['contacts'][0]['wa_id']
+        
         reply_to_whatsapp(message_text, sender_id)
 
     return ('', 204)
