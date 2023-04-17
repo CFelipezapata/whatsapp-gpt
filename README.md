@@ -30,6 +30,7 @@ You can use ngrok, run the following after installing it:
 ```shell
 ngrok http <your port>
 ```
+This is just an example, but you can host your code on a remote server if using for production.
 
 ### Link your Webhook
 Go to your app in the meta platform and configure a webhook, use your ngrok-generated URL for this.
